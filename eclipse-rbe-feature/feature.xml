@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
       id="com.essiembre.eclipse.rbe"
-      label="ResourceBundle Editor for QE"
+      label="Tlcsdm ResourceBundle Editor"
       version="1.0.7"
       provider-name="Pascal Essiembre"
       plugin="com.essiembre.eclipse.rbe">
