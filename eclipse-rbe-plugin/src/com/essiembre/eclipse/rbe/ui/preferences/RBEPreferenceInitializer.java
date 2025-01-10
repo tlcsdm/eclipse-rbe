@@ -52,14 +52,14 @@ public class RBEPreferenceInitializer extends AbstractPreferenceInitializer {
         prefs.setDefault(RBEPreferences.CONVERT_UNICODE_TO_ENCODED, true);
         prefs.setDefault(RBEPreferences.CONVERT_UNICODE_TO_ENCODED_UPPER, true);
 
-        prefs.setDefault(RBEPreferences.SPACES_AROUND_EQUAL_SIGNS, true);
+        prefs.setDefault(RBEPreferences.SPACES_AROUND_EQUAL_SIGNS, false);
 
         prefs.setDefault(RBEPreferences.KEY_GROUP_SEPARATOR, ".");
-        prefs.setDefault(RBEPreferences.ALIGN_EQUAL_SIGNS, true);
-        prefs.setDefault(RBEPreferences.SHOW_GENERATOR, true);
+        prefs.setDefault(RBEPreferences.ALIGN_EQUAL_SIGNS, false);
+        prefs.setDefault(RBEPreferences.SHOW_GENERATOR, false);
         prefs.setDefault(RBEPreferences.KEY_TREE_HIERARCHICAL, true);
 
-        prefs.setDefault(RBEPreferences.GROUP_KEYS, true);
+        prefs.setDefault(RBEPreferences.GROUP_KEYS, false);
         prefs.setDefault(RBEPreferences.GROUP_LEVEL_DEPTH, 1);
         prefs.setDefault(RBEPreferences.GROUP_LINE_BREAKS, 1);
         prefs.setDefault(RBEPreferences.GROUP_ALIGN_EQUAL_SIGNS, true);

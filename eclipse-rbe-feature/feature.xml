@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
       id="com.essiembre.eclipse.rbe"
-      label="ResourceBundle Editor"
-      version="1.0.6"
+      label="ResourceBundle Editor for QE"
+      version="1.0.7"
       provider-name="Pascal Essiembre"
       plugin="com.essiembre.eclipse.rbe">
 
@@ -12,6 +12,7 @@
 
    <copyright>
       Copyright (C) 2003-2014  Pascal Essiembre
+Copyright (C) 2024 Tlcsdm
    </copyright>
 
    <license url="http://www.apache.org/licenses/LICENSE-2.0">
@@ -235,9 +236,6 @@
 
    <plugin
          id="com.essiembre.eclipse.rbe"
-         download-size="0"
-         install-size="0"
-         version="1.0.6"
-         unpack="false"/>
+         version="1.0.7"/>
 
 </feature>
