@@ -1,9 +1,6 @@
 ResourceBundle Editor
 ===========
 
-[![Join the chat at https://gitter.im/essiembre/eclipse-rbe](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/essiembre/eclipse-rbe?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
-
-
 Eclipse plugin for editing Java resource bundles. Lets you manage all localized .properties files in one screen. Some features: sorted keys, warning icons on missing keys/values, conversion to/from Unicode, hierarchical view of keys, and more.
 
 
@@ -29,10 +26,10 @@ or visit page: [ResourceBundle Editor on Marketplace](https://marketplace.eclips
 Create a new update site in Eclipse with the following:
 
 * Site name:  ``ResourceBundle Editor``
-* Site URL:   ``https://raw.githubusercontent.com/essiembre/eclipse-rbe/master/eclipse-rbe-update-site/site.xml``
+* Site URL:   ``https://raw.githubusercontent.com/tlcsdm/eclipse-rbe/master/eclipse-rbe-update-site/site.xml``
 
 
 **Manual Install:**
 
 Download the plugin jar and copy it to Eclipse plugins directory. The jar location is (replace ``<version>``): 
-``https://raw.githubusercontent.com/essiembre/eclipse-rbe/master/eclipse-rbe-update-site/plugins/com.essiembre.eclipse.rbe_<version>.jar``.   Alternatively, you can download the entire Update Site bundled with everything else in the release link above and create a new update site in Eclipse, pointing to your local directory where you expanded the release.
+``https://raw.githubusercontent.com/tlcsdm/eclipse-rbe/master/eclipse-rbe-update-site/plugins/com.essiembre.eclipse.rbe_<version>.jar``.   Alternatively, you can download the entire Update Site bundled with everything else in the release link above and create a new update site in Eclipse, pointing to your local directory where you expanded the release.
