@@ -12,20 +12,11 @@ Go to ResourceBundle Editor web site for more screenshots and other information:
 How to install
 --------------
 
-**Marketplace:**
-
-*just drag to install* - you have to drag the image below to your Eclipse workspace
-
-<a href="http://marketplace.eclipse.org/marketplace-client-intro?mpc_install=2628188" class="drag" title="Drag to your running Eclipse workspace to install ResourceBundle Editor"><img src="https://marketplace.eclipse.org/sites/all/themes/solstice/public/images/marketplace/btn-install.png" alt="Drag to your running Eclipse workspace to install ResourceBundle Editor" /></a>
-
-or visit page: [ResourceBundle Editor on Marketplace](https://marketplace.eclipse.org/content/resourcebundle-editor)
-
-
 **Update Site:**
 
 Create a new update site in Eclipse with the following:
 
-* Site name:  ``ResourceBundle Editor``
+* Site name:  ``Tlcsdm ResourceBundle Editor``
 * Site URL:   ``https://raw.githubusercontent.com/tlcsdm/eclipse-rbe/master/eclipse-rbe-update-site/site.xml``
 
 
