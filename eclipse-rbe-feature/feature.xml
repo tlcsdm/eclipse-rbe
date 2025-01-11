@@ -220,7 +220,7 @@ Copyright (C) 2024 Tlcsdm
    </license>
 
    <url>
-      <update label="ResourceBundle Editor Update Site" url="https://raw.githubusercontent.com/essiembre/eclipse-rbe/master/eclipse-rbe-update-site/site.xml"/>
+      <update label="Tlcsdm ResourceBundle Editor Update Site" url="https://raw.githubusercontent.com/tlcsdm/eclipse-rbe/master/eclipse-rbe-update-site/site.xml"/>
    </url>
 
    <requires>
