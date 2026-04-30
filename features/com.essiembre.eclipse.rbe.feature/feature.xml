@@ -232,6 +232,7 @@ Copyright (C) 2024 Tlcsdm
       <import plugin="org.eclipse.ui.editors"/>
       <import plugin="org.eclipse.ui.ide"/>
       <import plugin="org.eclipse.ui.views"/>
+      <import plugin="org.eclipse.jdt.ui" optional="true"/>
    </requires>
 
    <plugin
