@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?pde version="3.8"?>
+<target includeMode="feature" name="target-platform">
+    <locations>
+        <location type="Target" uri="file:${project_loc:/com.essiembre.eclipse.rbe}/../../targets/2024-06.target">
+        </location>
+    </locations>
+</target>

@@ -17,10 +17,23 @@ How to install
 Create a new update site in Eclipse with the following:
 
 * Site name:  ``Tlcsdm ResourceBundle Editor``
-* Site URL:   ``https://raw.githubusercontent.com/tlcsdm/eclipse-rbe/master/eclipse-rbe-update-site/site.xml``
+* Site URL:   ``https://raw.githubusercontent.com/tlcsdm/eclipse-rbe/update_site/``
 
 
-**Manual Install:**
+Build
+-----
 
-Download the plugin jar and copy it to Eclipse plugins directory. The jar location is (replace ``<version>``): 
-``https://raw.githubusercontent.com/tlcsdm/eclipse-rbe/master/eclipse-rbe-update-site/plugins/com.essiembre.eclipse.rbe_<version>.jar``.   Alternatively, you can download the entire Update Site bundled with everything else in the release link above and create a new update site in Eclipse, pointing to your local directory where you expanded the release.
+This project uses [Tycho](https://github.com/eclipse-tycho/tycho) with [Maven](https://maven.apache.org/) to build. It requires Maven 3.9.0 or higher version.
+
+Dev build:
+
+```
+mvn clean verify
+```
+
+Release build:
+
+```
+mvn clean org.eclipse.tycho:tycho-versions-plugin:set-version -DnewVersion=2.0.0 verify
+```
+

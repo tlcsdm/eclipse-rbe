@@ -17,10 +17,23 @@ ResourceBundle Editor
 使用以下内容在 Eclipse 中创建一个新的更新站点：
 
 * Site name:  ``Tlcsdm ResourceBundle Editor``
-* Site URL:   ``https://raw.githubusercontent.com/tlcsdm/eclipse-rbe/master/eclipse-rbe-update-site/site.xml``
+* Site URL:   ``https://raw.githubusercontent.com/tlcsdm/eclipse-rbe/update_site/``
 
 
-**手动安装：**
+构建
+-----
 
-下载插件 jar 并将其复制到 Eclipse 插件目录。jar 位置为（替换“<version>”）：
-``https://raw.githubusercontent.com/tlcsdm/eclipse-rbe/master/eclipse-rbe-update-site/plugins/com.essiembre.eclipse.rbe_<version>.jar``.   或者，您可以下载上面发布链接中捆绑了所有其他内容的整个更新站点，并在 Eclipse 中创建一个新的更新站点，指向您展开发布的本地目录。
+本项目使用 [Tycho](https://github.com/eclipse-tycho/tycho) 与 [Maven](https://maven.apache.org/) 构建，需要 Maven 3.9.0 或更高版本。
+
+开发构建：
+
+```
+mvn clean verify
+```
+
+发布构建：
+
+```
+mvn clean org.eclipse.tycho:tycho-versions-plugin:set-version -DnewVersion=2.0.0 verify
+```
+
