@@ -31,6 +31,6 @@ jobs:
       - name: Upload artifact to release
         uses: softprops/action-gh-release@v3
         with:
-          files: sites/com.essiembre.eclipse.rbe.site/target/*.zip
+          files: sites/com.tlcsdm.eclipse.rbe.site/target/*.zip
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

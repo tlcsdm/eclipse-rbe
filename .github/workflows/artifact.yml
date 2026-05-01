@@ -29,9 +29,9 @@ jobs:
       uses: actions/upload-artifact@v7
       with:
         name: plugin
-        path: sites/com.essiembre.eclipse.rbe.site/target/*.zip
+        path: sites/com.tlcsdm.eclipse.rbe.site/target/*.zip
     - name: Archive test results
       uses: actions/upload-artifact@v7
       with:
         name: update_site
-        path: sites/com.essiembre.eclipse.rbe.site/target/repository
+        path: sites/com.tlcsdm.eclipse.rbe.site/target/repository
