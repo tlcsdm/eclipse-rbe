@@ -32,3 +32,17 @@ mvn clean org.eclipse.tycho:tycho-versions-plugin:set-version -DnewVersion=2.0.0
 
 1. 在eclipse中添加更新站点 `https://raw.githubusercontent.com/tlcsdm/eclipse-rbe/update_site/`
 2. 从 [Jenkins](https://jenkins.tlcsdm.com/job/eclipse-plugin/job/eclipse-rbe) 获取
+3. <table style="border: none;">
+  <tbody>
+    <tr style="border:none;">
+      <td style="vertical-align: middle; padding-top: 10px; border: none;">
+        <a href='http://marketplace.eclipse.org/marketplace-client-intro?mpc_install=7501942' title='Drag and drop into a running Eclipse Indigo workspace to install eclipse-translation'> 
+          <img src='https://marketplace.eclipse.org/modules/custom/eclipsefdn/eclipsefdn_marketplace/images/btn-install.svg'/>
+        </a>
+      </td>
+      <td style="vertical-align: middle; text-align: left; border: none;">
+        ← Drag it to your eclipse workbench to install! (I recommand Main Toolbar as Drop Target)
+      </td>
+    </tr>
+  </tbody>
+</table>
