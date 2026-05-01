@@ -1,5 +1,13 @@
 Here is an overview of changes for each release:
 
+Release 1.1.0 (2026)
+--------------------------
+- Built with 2024-06 and Java 17.
+
+Release 1.0.7 (2024)
+--------------------------
+- Improve settings
+
 Release 1.0.6 (2017-02-24)
 --------------------------
 - Fixed NPE in Eclipse Neon (github #52).
