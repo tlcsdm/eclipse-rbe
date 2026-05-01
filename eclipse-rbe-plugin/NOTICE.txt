@@ -1,3 +1,0 @@
-Eclipse ResourceBundle Editor Plugin
-Copyright 2001-2014 Pascal Essiembre
-
