@@ -1,6 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %plugin.name
+Automatic-Module-Name: com.tlcsdm.eclipse.rbe
 Bundle-SymbolicName: com.tlcsdm.eclipse.rbe;singleton:=true
 Bundle-Version: 1.1.0.qualifier
 Bundle-Activator: com.tlcsdm.eclipse.rbe.RBEPlugin
@@ -14,7 +15,4 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.ui.workbench.texteditor,
  org.eclipse.ui.editors,
  org.eclipse.ui.ide,
- org.eclipse.ui.views,
- org.eclipse.jdt.ui;resolution:=optional
-
-
+ org.eclipse.ui.views

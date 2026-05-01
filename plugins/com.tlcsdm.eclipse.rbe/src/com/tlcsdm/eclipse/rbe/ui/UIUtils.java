@@ -32,214 +32,205 @@ import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.ui.PlatformUI;
 
 import com.tlcsdm.eclipse.rbe.RBEPlugin;
 
-
 /**
  * Utility methods related to application UI.
+ * 
  * @author Pascal Essiembre
  * @author Tobias Langner
  */
 public final class UIUtils {
 
-    /** Name of resource bundle image. */
-    public static final String IMAGE_RESOURCE_BUNDLE = 
-            "resourcebundle.gif"; 
-    /** Name of properties file image. */
-    public static final String IMAGE_PROPERTIES_FILE = 
-            "propertiesfile.gif"; 
-    /** Name of new properties file image. */
-    public static final String IMAGE_NEW_PROPERTIES_FILE = 
-            "newpropertiesfile.gif"; 
-    /** Name of hierarchical layout image. */
-    public static final String IMAGE_LAYOUT_HIERARCHICAL =
-            "hierarchicalLayout.gif"; 
-    /** Name of flat layout image. */
-    public static final String IMAGE_LAYOUT_FLAT = 
-            "flatLayout.gif"; 
-    
-    public static final String IMAGE_INCOMPLETE_ENTRIES =
-            "incomplete.gif"; 
-    
-    /** Image registry. */
-    private static final ImageRegistry imageRegistry = new ImageRegistry();
-    
-    /**
-     * Constructor.
-     */
-    private UIUtils() {
-        super();
-    }
+	/** Name of resource bundle image. */
+	public static final String IMAGE_RESOURCE_BUNDLE = "resourcebundle.gif";
+	/** Name of properties file image. */
+	public static final String IMAGE_PROPERTIES_FILE = "propertiesfile.gif";
+	/** Name of new properties file image. */
+	public static final String IMAGE_NEW_PROPERTIES_FILE = "newpropertiesfile.gif";
+	/** Name of hierarchical layout image. */
+	public static final String IMAGE_LAYOUT_HIERARCHICAL = "hierarchicalLayout.gif";
+	/** Name of flat layout image. */
+	public static final String IMAGE_LAYOUT_FLAT = "flatLayout.gif";
 
-    /**
-     * Creates a font by altering the font associated with the given control
-     * and applying the provided style (size is unaffected).
-     * @param control control we base our font data on
-     * @param style   style to apply to the new font
-     * @return newly created font
-     */
-    public static Font createFont(Control control, int style) {
-        //TODO consider dropping in favor of control-less version?
-        return createFont(control, style, 0);
-    }
+	public static final String IMAGE_INCOMPLETE_ENTRIES = "incomplete.gif";
 
-    
-    /**
-     * Creates a font by altering the font associated with the given control
-     * and applying the provided style and relative size.
-     * @param control control we base our font data on
-     * @param style   style to apply to the new font
-     * @param relSize size to add or remove from the control size
-     * @return newly created font
-     */
-    public static Font createFont(Control control, int style, int relSize) {
-        //TODO consider dropping in favor of control-less version?
-        FontData[] fontData = control.getFont().getFontData();
-        for (int i = 0; i < fontData.length; i++) {
-            fontData[i].setHeight(fontData[i].getHeight() + relSize);
-            fontData[i].setStyle(style);
-        }
-        return new Font(control.getDisplay(), fontData);
-    }
+	/** Image registry. */
+	private static final ImageRegistry imageRegistry = new ImageRegistry();
 
-    /**
-     * Creates a font by altering the system font
-     * and applying the provided style and relative size.
-     * @param style   style to apply to the new font
-     * @return newly created font
-     */
-    public static Font createFont(int style) {
-        return createFont(style, 0);
-    }
-    
-    /**
-     * Creates a font by altering the system font
-     * and applying the provided style and relative size.
-     * @param style   style to apply to the new font
-     * @param relSize size to add or remove from the control size
-     * @return newly created font
-     */
-    public static Font createFont(int style, int relSize) {
-        Display display = RBEPlugin.getDefault().getWorkbench().getDisplay();
-        FontData[] fontData = display.getSystemFont().getFontData();
-        for (int i = 0; i < fontData.length; i++) {
-            fontData[i].setHeight(fontData[i].getHeight() + relSize);
-            fontData[i].setStyle(style);
-        }
-        return new Font(display, fontData);
-    }
+	/**
+	 * Constructor.
+	 */
+	private UIUtils() {
+		super();
+	}
 
-    /**
-     * Creates a cursor matching given style.
-     * @param style   style to apply to the new font
-     * @return newly created cursor
-     */
-    public static Cursor createCursor(int style) {
-        Display display = RBEPlugin.getDefault().getWorkbench().getDisplay();
-        return new Cursor(display, style);
-    }
-    
-    /**
-     * Gets a system color.
-     * @param colorId SWT constant
-     * @return system color
-     */
-    public static Color getSystemColor(int colorId) {
-        return RBEPlugin.getDefault().getWorkbench()
-                .getDisplay().getSystemColor(colorId);
-    }
-    
-    /**
-     * Gets the approximate width required to display a given number of
-     * characters in a control.
-     * @param control the control on which to get width
-     * @param numOfChars the number of chars
-     * @return width
-     */    
-    public static int getWidthInChars(Control control, int numOfChars) {
-        GC gc = new GC(control);
-        Point extent = gc.textExtent("W");//$NON-NLS-1$
-        gc.dispose();
-        return numOfChars * extent.x;
-    }
+	/**
+	 * Creates a font by altering the font associated with the given control and
+	 * applying the provided style (size is unaffected).
+	 * 
+	 * @param control control we base our font data on
+	 * @param style   style to apply to the new font
+	 * @return newly created font
+	 */
+	public static Font createFont(Control control, int style) {
+		// TODO consider dropping in favor of control-less version?
+		return createFont(control, style, 0);
+	}
 
-    /**
-     * Gets the approximate height required to display a given number of
-     * characters in a control, assuming, they were laid out vertically.
-     * @param control the control on which to get height
-     * @param numOfChars the number of chars
-     * @return height
-     */    
-    public static int getHeightInChars(Control control, int numOfChars) {
-        GC gc = new GC(control);
-        Point extent = gc.textExtent("W");//$NON-NLS-1$
-        gc.dispose();
-        return numOfChars * extent.y;
-    }
-    
-    /**
-     * Shows an error dialog based on the supplied arguments.
-     * @param shell the shell
-     * @param exception the core exception
-     * @param msgKey key to the plugin message text
-     */
-    public static void showErrorDialog(
-            Shell shell, CoreException exception, String msgKey) {
-        exception.printStackTrace();
-        ErrorDialog.openError(
-                shell,
-                RBEPlugin.getString(msgKey),
-                exception.getLocalizedMessage(),
-                exception.getStatus());
-    }
-    
-    /**
-     * Shows an error dialog based on the supplied arguments.
-     * @param shell the shell
-     * @param exception the core exception
-     * @param msgKey key to the plugin message text
-     */
-    public static void showErrorDialog(
-            Shell shell, Exception exception, String msgKey) {
-        exception.printStackTrace();
-        IStatus status = new Status(
-                IStatus.ERROR, 
-                RBEPlugin.ID,
-                0, 
-                RBEPlugin.getString(msgKey) + " "
-                        + RBEPlugin.getString("error.seeLogs"),
-                exception);
-        ErrorDialog.openError(
-                shell,
-                RBEPlugin.getString(msgKey),
-                exception.getLocalizedMessage(),
-                status);
-    }
-    
-    /**
-     * Gets a locale, null-safe, display name.
-     * @param locale locale to get display name
-     * @return display name
-     */
-    public static String getDisplayName(Locale locale) {
-        if (locale == null) {
-            return RBEPlugin.getString("editor.default");
-        }
-        return locale.getDisplayName();
-    }
-    
-    /**
-     * Gets an image.
-     * @param imageName image name
-     * @return image
-     */
-    public static Image getImage(String imageName) {
-        Image image = imageRegistry.get(imageName);
-        if (image == null) {
-            image = RBEPlugin.getImageDescriptor(imageName).createImage();
-            imageRegistry.put(imageName, image);
-        }
-        return image;
-    }
+	/**
+	 * Creates a font by altering the font associated with the given control and
+	 * applying the provided style and relative size.
+	 * 
+	 * @param control control we base our font data on
+	 * @param style   style to apply to the new font
+	 * @param relSize size to add or remove from the control size
+	 * @return newly created font
+	 */
+	public static Font createFont(Control control, int style, int relSize) {
+		// TODO consider dropping in favor of control-less version?
+		FontData[] fontData = control.getFont().getFontData();
+		for (int i = 0; i < fontData.length; i++) {
+			fontData[i].setHeight(fontData[i].getHeight() + relSize);
+			fontData[i].setStyle(style);
+		}
+		return new Font(control.getDisplay(), fontData);
+	}
+
+	/**
+	 * Creates a font by altering the system font and applying the provided style
+	 * and relative size.
+	 * 
+	 * @param style style to apply to the new font
+	 * @return newly created font
+	 */
+	public static Font createFont(int style) {
+		return createFont(style, 0);
+	}
+
+	/**
+	 * Creates a font by altering the system font and applying the provided style
+	 * and relative size.
+	 * 
+	 * @param style   style to apply to the new font
+	 * @param relSize size to add or remove from the control size
+	 * @return newly created font
+	 */
+	public static Font createFont(int style, int relSize) {
+		Display display = PlatformUI.getWorkbench().getDisplay();
+		FontData[] fontData = display.getSystemFont().getFontData();
+		for (int i = 0; i < fontData.length; i++) {
+			fontData[i].setHeight(fontData[i].getHeight() + relSize);
+			fontData[i].setStyle(style);
+		}
+		return new Font(display, fontData);
+	}
+
+	/**
+	 * Creates a cursor matching given style.
+	 * 
+	 * @param style style to apply to the new font
+	 * @return newly created cursor
+	 */
+	public static Cursor createCursor(int style) {
+		Display display = PlatformUI.getWorkbench().getDisplay();
+		return new Cursor(display, style);
+	}
+
+	/**
+	 * Gets a system color.
+	 * 
+	 * @param colorId SWT constant
+	 * @return system color
+	 */
+	public static Color getSystemColor(int colorId) {
+		return PlatformUI.getWorkbench().getDisplay().getSystemColor(colorId);
+	}
+
+	/**
+	 * Gets the approximate width required to display a given number of characters
+	 * in a control.
+	 * 
+	 * @param control    the control on which to get width
+	 * @param numOfChars the number of chars
+	 * @return width
+	 */
+	public static int getWidthInChars(Control control, int numOfChars) {
+		GC gc = new GC(control);
+		Point extent = gc.textExtent("W");//$NON-NLS-1$
+		gc.dispose();
+		return numOfChars * extent.x;
+	}
+
+	/**
+	 * Gets the approximate height required to display a given number of characters
+	 * in a control, assuming, they were laid out vertically.
+	 * 
+	 * @param control    the control on which to get height
+	 * @param numOfChars the number of chars
+	 * @return height
+	 */
+	public static int getHeightInChars(Control control, int numOfChars) {
+		GC gc = new GC(control);
+		Point extent = gc.textExtent("W");//$NON-NLS-1$
+		gc.dispose();
+		return numOfChars * extent.y;
+	}
+
+	/**
+	 * Shows an error dialog based on the supplied arguments.
+	 * 
+	 * @param shell     the shell
+	 * @param exception the core exception
+	 * @param msgKey    key to the plugin message text
+	 */
+	public static void showErrorDialog(Shell shell, CoreException exception, String msgKey) {
+		exception.printStackTrace();
+		ErrorDialog.openError(shell, RBEPlugin.getString(msgKey), exception.getLocalizedMessage(),
+				exception.getStatus());
+	}
+
+	/**
+	 * Shows an error dialog based on the supplied arguments.
+	 * 
+	 * @param shell     the shell
+	 * @param exception the core exception
+	 * @param msgKey    key to the plugin message text
+	 */
+	public static void showErrorDialog(Shell shell, Exception exception, String msgKey) {
+		exception.printStackTrace();
+		IStatus status = new Status(IStatus.ERROR, RBEPlugin.ID, 0,
+				RBEPlugin.getString(msgKey) + " " + RBEPlugin.getString("error.seeLogs"), exception);
+		ErrorDialog.openError(shell, RBEPlugin.getString(msgKey), exception.getLocalizedMessage(), status);
+	}
+
+	/**
+	 * Gets a locale, null-safe, display name.
+	 * 
+	 * @param locale locale to get display name
+	 * @return display name
+	 */
+	public static String getDisplayName(Locale locale) {
+		if (locale == null) {
+			return RBEPlugin.getString("editor.default");
+		}
+		return locale.getDisplayName();
+	}
+
+	/**
+	 * Gets an image.
+	 * 
+	 * @param imageName image name
+	 * @return image
+	 */
+	public static Image getImage(String imageName) {
+		Image image = imageRegistry.get(imageName);
+		if (image == null) {
+			image = RBEPlugin.getImageDescriptor(imageName).createImage();
+			imageRegistry.put(imageName, image);
+		}
+		return image;
+	}
 }
