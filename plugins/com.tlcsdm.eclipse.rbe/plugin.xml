@@ -18,12 +18,12 @@
          point="org.eclipse.ui.newWizards">
       <category
             name="%wizard.rb"
-            id="com.essiembre.eclipse.i18n.resourcebundle">
+            id="com.tlcsdm.eclipse.i18n.resourcebundle">
       </category>
       <wizard
             name="ResourceBundle"
             icon="icons/resourcebundle.gif"
-            category="com.essiembre.eclipse.i18n.resourcebundle"
+            category="com.tlcsdm.eclipse.i18n.resourcebundle"
             class="com.tlcsdm.eclipse.rbe.ui.wizards.ResourceBundleWizard"
             id="com.tlcsdm.eclipse.rbe.ui.wizards.ResourceBundleWizard">
             <description> 

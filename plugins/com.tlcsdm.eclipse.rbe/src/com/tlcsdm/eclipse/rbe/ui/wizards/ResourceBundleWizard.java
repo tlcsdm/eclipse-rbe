@@ -185,7 +185,7 @@ public class ResourceBundleWizard extends Wizard implements INewWizard {
 
     private void throwCoreException(String message) throws CoreException {
         IStatus status = new Status(IStatus.ERROR, 
-                "com.essiembre.eclipse.i18n.resourcebundle", 
+                "com.tlcsdm.eclipse.i18n.resourcebundle", 
                 IStatus.OK, message, null);
         throw new CoreException(status);
     }

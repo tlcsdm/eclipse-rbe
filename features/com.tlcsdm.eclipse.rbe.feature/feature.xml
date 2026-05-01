@@ -3,7 +3,7 @@
       id="com.tlcsdm.eclipse.rbe.feature"
       label="Tlcsdm ResourceBundle Editor"
       version="1.1.0.qualifier"
-      provider-name="Pascal Essiembre"
+      provider-name="Tlcsdm"
       plugin="com.tlcsdm.eclipse.rbe">
 
    <description>
