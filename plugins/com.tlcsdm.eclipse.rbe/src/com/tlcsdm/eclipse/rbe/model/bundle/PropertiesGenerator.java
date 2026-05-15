@@ -17,6 +17,7 @@ package com.tlcsdm.eclipse.rbe.model.bundle;
 
 import java.util.Iterator;
 import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.eclipse.core.runtime.Platform;
 
@@ -42,6 +43,9 @@ public final class PropertiesGenerator {
     private static final String SPECIAL_VALUE_SAVE_CHARS = "\t\f";
     /** Special resource bundle characters when persisting keys. */
     private static final String SPECIAL_KEY_SAVE_CHARS = "=\t\f#!: ";
+    /** Any supported line separator. */
+    private static final Pattern PATTERN_LINE_BREAK =
+            Pattern.compile("\r\n|\r|\n");
     
     /** System line separator. */
 	private static final String SYSTEM_LINE_SEP = Platform
@@ -51,14 +55,14 @@ public final class PropertiesGenerator {
     /** Forced line separators. */
     private static final String[] FORCED_LINE_SEP = new String[3];
     /** Actual line separators. */
-    private static final String[] LINE_SEP = new String[3];
+    private static final String[] ACTUAL_LINE_SEP = new String[3];
     static {
         FORCED_LINE_SEP[RBEPreferences.NEW_LINE_UNIX] = "\\\\n";
         FORCED_LINE_SEP[RBEPreferences.NEW_LINE_WIN] = "\\\\r\\\\n";
         FORCED_LINE_SEP[RBEPreferences.NEW_LINE_MAC] = "\\\\r";
-        LINE_SEP[RBEPreferences.NEW_LINE_UNIX] = "\n";
-        LINE_SEP[RBEPreferences.NEW_LINE_WIN] = "\r\n";
-        LINE_SEP[RBEPreferences.NEW_LINE_MAC] = "\r";
+        ACTUAL_LINE_SEP[RBEPreferences.NEW_LINE_UNIX] = "\n";
+        ACTUAL_LINE_SEP[RBEPreferences.NEW_LINE_WIN] = "\r\n";
+        ACTUAL_LINE_SEP[RBEPreferences.NEW_LINE_MAC] = "\r";
     }
 
     /**
@@ -307,13 +311,13 @@ public final class PropertiesGenerator {
 
     private static String getLineBreak() {
         if (RBEPreferences.getForceNewLineType()) {
-            return LINE_SEP[RBEPreferences.getNewLineType()];
+            return ACTUAL_LINE_SEP[RBEPreferences.getNewLineType()];
         }
         return SYSTEM_LINE_SEP;
     }
 
     private static String normalizeLineBreaks(String text, String lineBreak) {
-        return text.replaceAll("\r\n|\r|\n",
+        return PATTERN_LINE_BREAK.matcher(text).replaceAll(
                 Matcher.quoteReplacement(lineBreak));
     }
     
