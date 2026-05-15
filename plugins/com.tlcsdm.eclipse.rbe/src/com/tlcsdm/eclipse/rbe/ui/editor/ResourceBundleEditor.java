@@ -388,8 +388,12 @@ public class ResourceBundleEditor extends MultiPageEditorPart
             deltaFound |= delta!= null;
          }
          if ( deltaFound ) {
-            resourceMediator.reloadProperties();
-            i18nPage.refreshTextBoxes();
+            Display.getDefault().asyncExec(() -> {
+               if ( i18nPage != null && !i18nPage.isDisposed() ) {
+                  resourceMediator.reloadProperties();
+                  i18nPage.refreshTextBoxes();
+               }
+            });
          }
       }
    }
