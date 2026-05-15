@@ -133,6 +133,9 @@ public final class PropertiesGenerator {
                         for (int i = 0; i < numOfLineBreaks; i++) {
                             text.append(lineBreak);
                         }
+                    } else if (!RBEPreferences.getAlignEqualSigns()
+                            || !RBEPreferences.getGroupAlignEqualSigns()) {
+                        equalIndex = key.length();
                     }
                 } else {
                     equalIndex = getEqualIndex(key, null, bundle);
