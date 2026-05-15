@@ -16,6 +16,7 @@
 package com.tlcsdm.eclipse.rbe.model.bundle;
 
 import java.util.Iterator;
+import java.util.regex.Matcher;
 
 import org.eclipse.core.runtime.Platform;
 
@@ -312,7 +313,8 @@ public final class PropertiesGenerator {
     }
 
     private static String normalizeLineBreaks(String text, String lineBreak) {
-        return text.replaceAll("\r\n|\r|\n", lineBreak);
+        return text.replaceAll("\r\n|\r|\n",
+                Matcher.quoteReplacement(lineBreak));
     }
     
     /**
