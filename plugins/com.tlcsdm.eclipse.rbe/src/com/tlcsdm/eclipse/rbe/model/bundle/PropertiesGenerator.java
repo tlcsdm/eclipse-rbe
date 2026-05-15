@@ -16,6 +16,8 @@
 package com.tlcsdm.eclipse.rbe.model.bundle;
 
 import java.util.Iterator;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.eclipse.core.runtime.Platform;
 
@@ -41,6 +43,9 @@ public final class PropertiesGenerator {
     private static final String SPECIAL_VALUE_SAVE_CHARS = "\t\f";
     /** Special resource bundle characters when persisting keys. */
     private static final String SPECIAL_KEY_SAVE_CHARS = "=\t\f#!: ";
+    /** Any supported line separator. */
+    private static final Pattern PATTERN_LINE_BREAK =
+            Pattern.compile("\r\n|\r|\n");
     
     /** System line separator. */
 	private static final String SYSTEM_LINE_SEP = Platform
@@ -49,10 +54,15 @@ public final class PropertiesGenerator {
 					null);
     /** Forced line separators. */
     private static final String[] FORCED_LINE_SEP = new String[3];
+    /** Actual line separators. */
+    private static final String[] ACTUAL_LINE_SEP = new String[3];
     static {
         FORCED_LINE_SEP[RBEPreferences.NEW_LINE_UNIX] = "\\\\n";
         FORCED_LINE_SEP[RBEPreferences.NEW_LINE_WIN] = "\\\\r\\\\n";
         FORCED_LINE_SEP[RBEPreferences.NEW_LINE_MAC] = "\\\\r";
+        ACTUAL_LINE_SEP[RBEPreferences.NEW_LINE_UNIX] = "\n";
+        ACTUAL_LINE_SEP[RBEPreferences.NEW_LINE_WIN] = "\r\n";
+        ACTUAL_LINE_SEP[RBEPreferences.NEW_LINE_MAC] = "\r";
     }
 
     /**
@@ -69,7 +79,7 @@ public final class PropertiesGenerator {
      * @return the generated string
      */
     public static String generate(Bundle bundle) {
-        String lineBreak = SYSTEM_LINE_SEP;
+        String lineBreak = getLineBreak();
         int numOfLineBreaks = RBEPreferences.getGroupLineBreaks();
         StringBuffer text = new StringBuffer();
 
@@ -79,9 +89,9 @@ public final class PropertiesGenerator {
             if (RBEPreferences.getShowGenerator() 
                     && !headComment.startsWith(GENERATED_BY)) {
                 text.append(GENERATED_BY);
-                text.append(SYSTEM_LINE_SEP);
+                text.append(lineBreak);
             }
-            text.append(headComment);
+            text.append(normalizeLineBreaks(headComment, lineBreak));
         }
         
         // Format
@@ -134,10 +144,11 @@ public final class PropertiesGenerator {
                     value = PropertiesGenerator.convertUnicodeToEncoded(value);
                 }
                 if (comment != null && comment.length() > 0) {
-                    text.append(comment);
+                    text.append(normalizeLineBreaks(comment, lineBreak));
                 }
                 appendKey(text, key, equalIndex, bundleEntry.isCommented());
-                appendValue(text, value, equalIndex, bundleEntry.isCommented());
+                appendValue(text, value, equalIndex,
+                        bundleEntry.isCommented(), lineBreak);
                 text.append(lineBreak);
             }
         }
@@ -192,7 +203,7 @@ public final class PropertiesGenerator {
      */
     private static void appendValue(
             StringBuffer text, String value, 
-            int equalIndex, boolean commented) {
+            int equalIndex, boolean commented, String lineBreak) {
         if (value != null) {
             // Escape potential leading spaces.
             if (value.startsWith(" ")) {
@@ -210,7 +221,7 @@ public final class PropertiesGenerator {
             if (RBEPreferences.getNewLineNice()) {
                 value = value.replaceAll(
                         "(\\\\r\\\\n|\\\\r|\\\\n)",
-                        "$1\\\\" + SYSTEM_LINE_SEP);
+                        "$1\\\\" + lineBreak);
             }
             // Wrap lines
             if (RBEPreferences.getWrapLines() && valueStartPos < lineLength) {
@@ -220,9 +231,9 @@ public final class PropertiesGenerator {
                     int endPos = Math.min(
                             valueBuf.length(), lineLength - valueStartPos);
                     String line = valueBuf.substring(0, endPos);
-                    int breakPos = line.indexOf(SYSTEM_LINE_SEP);
+                    int breakPos = line.indexOf(lineBreak);
                     if (breakPos != -1) {
-                        endPos = breakPos + SYSTEM_LINE_SEP.length();
+                        endPos = breakPos + lineBreak.length();
                         saveValue(text, valueBuf.substring(0, endPos));
                         //text.append(valueBuf.substring(0, endPos));
                     } else {
@@ -232,13 +243,13 @@ public final class PropertiesGenerator {
                             // text value has no spaces but content
                             saveValue(text, valueBuf.substring(0, endPos));
                             text.append("\\");
-                            text.append(SYSTEM_LINE_SEP);
+                            text.append(lineBreak);
                         } else if (breakPos != -1) {
                             endPos = breakPos + 1;
                             saveValue(text, valueBuf.substring(0, endPos));
                             //text.append(valueBuf.substring(0, endPos));
                             text.append("\\");
-                            text.append(SYSTEM_LINE_SEP);
+                            text.append(lineBreak);
                         }
                     }
                     valueBuf.delete(0, endPos);
@@ -296,6 +307,18 @@ public final class PropertiesGenerator {
     }
     private static void saveValue(StringBuffer buf, String str) {
         saveText(buf, str, SPECIAL_VALUE_SAVE_CHARS);
+    }
+
+    private static String getLineBreak() {
+        if (RBEPreferences.getForceNewLineType()) {
+            return ACTUAL_LINE_SEP[RBEPreferences.getNewLineType()];
+        }
+        return SYSTEM_LINE_SEP;
+    }
+
+    private static String normalizeLineBreaks(String text, String lineBreak) {
+        return PATTERN_LINE_BREAK.matcher(text).replaceAll(
+                Matcher.quoteReplacement(lineBreak));
     }
     
     /**
