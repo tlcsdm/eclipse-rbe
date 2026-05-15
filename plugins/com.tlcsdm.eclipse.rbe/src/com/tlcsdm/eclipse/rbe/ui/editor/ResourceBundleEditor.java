@@ -208,8 +208,14 @@ public class ResourceBundleEditor extends MultiPageEditorPart
     	try {
             obj = super.getAdapter(adapter);
         } catch (NullPointerException e) {
+            // MultiPageEditorPart delegates getAdapter() to the active page
+            // editor.  I18nPageEditor extends AbstractTextEditor without a
+            // real text-editor context, so adapter factories registered by
+            // other plugins (e.g. SDBG) may throw NPE when they inspect
+            // editor state.  Downgrade to WARNING to avoid cluttering the
+            // Eclipse error log with misleading ERROR entries.
             RBEPlugin.getDefault().getLog().log(new Status(
-                    Status.ERROR, RBEPlugin.ID, 
+                    Status.WARNING, RBEPlugin.ID, 
                     "Got a NPE from MultiPageEditorPart#getAdapter(Class<T>) "
                   + "for adapter class: " + adapter, e));
         }
