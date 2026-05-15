@@ -48,6 +48,7 @@ import com.tlcsdm.eclipse.rbe.model.bundle.BundleGroup;
 import com.tlcsdm.eclipse.rbe.model.tree.KeyTree;
 import com.tlcsdm.eclipse.rbe.model.tree.KeyTreeItem;
 import com.tlcsdm.eclipse.rbe.model.workbench.RBEPreferences;
+import com.tlcsdm.eclipse.rbe.ui.UIUtils;
 import com.tlcsdm.eclipse.rbe.ui.editor.i18n.tree.KeyTreeComposite;
 import com.tlcsdm.eclipse.rbe.ui.editor.resources.ResourceManager;
 
@@ -190,9 +191,7 @@ public class I18nPage extends ScrolledComposite {
 //        }
         _rightComposite.setLayout(new GridLayout(1, false));
         entryComposites.clear();
-        for (Iterator<Locale> iter = resourceMediator.getLocales().iterator(); 
-                iter.hasNext();) {
-            Locale locale = (Locale) iter.next();
+        for (Locale locale : UIUtils.sortLocales(resourceMediator.getLocales())) {
             BundleEntryComposite entryComposite = new BundleEntryComposite(
                     _rightComposite, resourceMediator, locale, this);
             entryComposite.addFocusListener(localBehaviour);

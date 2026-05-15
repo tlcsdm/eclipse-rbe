@@ -15,6 +15,11 @@
  */
 package com.tlcsdm.eclipse.rbe.ui;
 
+import java.text.Collator;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Comparator;
+import java.util.List;
 import java.util.Locale;
 
 import org.eclipse.core.runtime.CoreException;
@@ -43,6 +48,32 @@ import com.tlcsdm.eclipse.rbe.RBEPlugin;
  * @author Tobias Langner
  */
 public final class UIUtils {
+
+	/**
+	 * Comparator for {@link Locale} instances, using {@link Collator} with
+	 * {@link Collator#PRIMARY} strength to respect the locale rules of the
+	 * current Eclipse instance. A {@code null} locale (the default locale) is
+	 * always sorted first.
+	 */
+	public static final class LocaleComparator implements Comparator<Locale> {
+		private final Collator collator;
+
+		public LocaleComparator() {
+			this.collator = Collator.getInstance();
+			this.collator.setStrength(Collator.PRIMARY);
+		}
+
+		@Override
+		public int compare(Locale o1, Locale o2) {
+			if (o1 == null && o2 == null)
+				return 0;
+			if (o1 != null && o2 == null)
+				return 1;
+			if (o1 == null && o2 != null)
+				return -1;
+			return collator.compare(o1.getDisplayName(), o2.getDisplayName());
+		}
+	}
 
 	/** Name of resource bundle image. */
 	public static final String IMAGE_RESOURCE_BUNDLE = "resourcebundle.gif";
@@ -217,6 +248,20 @@ public final class UIUtils {
 			return RBEPlugin.getString("editor.default");
 		}
 		return locale.getDisplayName();
+	}
+
+	/**
+	 * Sorts the given collection of locales using {@link Locale#getDisplayName()}
+	 * and {@link Collator} rules of the current locale. A {@code null} locale (the
+	 * default locale) is always placed first.
+	 * 
+	 * @param locales locales to sort
+	 * @return new sorted list of locales
+	 */
+	public static List<Locale> sortLocales(Collection<Locale> locales) {
+		ArrayList<Locale> result = new ArrayList<>(locales);
+		result.sort(new LocaleComparator());
+		return result;
 	}
 
 	/**
