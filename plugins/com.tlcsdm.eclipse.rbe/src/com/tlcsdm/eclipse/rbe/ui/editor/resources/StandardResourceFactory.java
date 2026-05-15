@@ -97,7 +97,9 @@ public class StandardResourceFactory extends ResourceFactory {
         for (int i = 0; i < resources.length; i++) {
             IResource resource = resources[i];
             String resourceName = resource.getName();
-            if (resource instanceof IFile && resourceName.matches(regex)) {
+            if (resource instanceof IFile
+                    && resourceName.matches(regex)
+                    && ResourceFilter.isResourceDisplayed(resourceName, regex)) {
                 validResources.add(resource);
             }
         }
