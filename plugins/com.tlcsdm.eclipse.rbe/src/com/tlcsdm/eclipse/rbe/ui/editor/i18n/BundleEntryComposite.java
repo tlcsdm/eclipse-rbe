@@ -25,6 +25,7 @@ import java.util.Locale;
 import java.util.Map;
 
 import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.jface.resource.ColorRegistry;
 import org.eclipse.jface.resource.FontRegistry;
 import org.eclipse.jface.text.Document;
 import org.eclipse.jface.text.IDocument;
@@ -44,6 +45,7 @@ import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.TraverseEvent;
 import org.eclipse.swt.events.TraverseListener;
+import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.FontData;
 import org.eclipse.swt.graphics.Image;
@@ -549,10 +551,7 @@ public class BundleEntryComposite extends Composite {
         // for arabic and some other languages  
         textBox.setOrientation(getOrientation(locale));
         
-        FontRegistry fontRegistry = PlatformUI.getWorkbench().getThemeManager()
-                .getCurrentTheme().getFontRegistry();
-        Font font = fontRegistry.get(
-                "com.tlcsdm.eclipse.rbe.ui.preferences.fontDefinition");
+        Font font = getEditorTextFontFromRegistry();
         if ( font != null ) {
            textBox.setFont(font);
         }
@@ -705,12 +704,14 @@ public class BundleEntryComposite extends Composite {
         if (commentedCheckbox.getSelection()) {
             commentedCheckbox.setToolTipText(
                     RBEPlugin.getString("value.uncomment.tooltip"));
-            textBox.setForeground(
-                    getDisplay().getSystemColor(SWT.COLOR_GRAY));
+            Color commentedColor = getEditorTextColorCommentedFromRegistry();
+            textBox.setForeground(commentedColor != null ? commentedColor
+                    : getDisplay().getSystemColor(SWT.COLOR_GRAY));
         } else {
             commentedCheckbox.setToolTipText(
                     RBEPlugin.getString("value.comment.tooltip"));
-            textBox.setForeground(null);
+            // null resets to the system default foreground color
+            textBox.setForeground(getEditorTextColorFromRegistry());
         }
     }
 
@@ -882,6 +883,29 @@ public class BundleEntryComposite extends Composite {
             }
         }
         return SWT.LEFT_TO_RIGHT;
+    }
+
+    private Font getEditorTextFontFromRegistry() {
+        FontRegistry fontRegistry = PlatformUI.getWorkbench().getThemeManager()
+                .getCurrentTheme().getFontRegistry();
+        return fontRegistry.get(
+                "com.tlcsdm.eclipse.rbe.ui.preferences.fontDefinition");
+    }
+
+    // Default ID org.eclipse.ui.workbench.ACTIVE_TAB_TEXT_COLOR
+    private Color getEditorTextColorFromRegistry() {
+        ColorRegistry colorRegistry = PlatformUI.getWorkbench().getThemeManager()
+                .getCurrentTheme().getColorRegistry();
+        return colorRegistry.get(
+                "com.tlcsdm.eclipse.rbe.ui.preferences.textColorDefinition");
+    }
+
+    // Default ID org.eclipse.ui.workbench.INACTIVE_TAB_TEXT_COLOR
+    private Color getEditorTextColorCommentedFromRegistry() {
+        ColorRegistry colorRegistry = PlatformUI.getWorkbench().getThemeManager()
+                .getCurrentTheme().getColorRegistry();
+        return colorRegistry.get(
+                "com.tlcsdm.eclipse.rbe.ui.preferences.textCommentedColorDefinition");
     }
 }
 
