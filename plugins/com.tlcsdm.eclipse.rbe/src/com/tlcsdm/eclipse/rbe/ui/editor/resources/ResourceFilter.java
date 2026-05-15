@@ -168,7 +168,7 @@ public class ResourceFilter implements IPropertyChangeListener {
      * the pattern list.
      * </p>
      *
-     * @param locales locales to filter
+     * @param locales locales to filter; must not contain {@code null} elements
      * @return filtered locales; may be empty but never {@code null}
      */
     private static Locale[] filterLocales(Locale[] locales) {
@@ -179,7 +179,7 @@ public class ResourceFilter implements IPropertyChangeListener {
         // The root locale (base file) always passes through.
         for (int j = 0; j < locales.length; j++) {
             Locale loc = locales[j];
-            if (ROOT_LOCALE.equals(loc) || loc == null) {
+            if (ROOT_LOCALE.equals(loc)) {
                 already.add(loc);
                 result.add(loc);
                 break;
@@ -226,13 +226,19 @@ public class ResourceFilter implements IPropertyChangeListener {
      */
     public static boolean isResourceDisplayed(String resourceName, String regex) {
         Matcher resourceMatcher = getResourcePattern(regex).matcher(resourceName);
-        // The calling method already verified the name matches; invoke matches() to populate groups.
-        resourceMatcher.matches();
+        // Guard: only proceed if the name actually matches the bundle regex.
+        if (!resourceMatcher.matches()) {
+            return false;
+        }
 
         String localeLanguage    = resourceMatcher.group(3);
         String localeWithCountry = resourceMatcher.group(4);
         String localeWithVariant = resourceMatcher.group(5);
 
+        // Groups 3, 4, and 5 are mutually exclusive alternations in the properties-file regex.
+        // The regex is anchored, so only the alternative that allows the whole name to match will
+        // capture a value. At most one of localeLanguage, localeWithCountry, localeWithVariant
+        // will be non-null.
         Locale resourceLocale;
 
         if (localeLanguage == null && localeWithCountry == null && localeWithVariant == null) {
