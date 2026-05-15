@@ -91,8 +91,13 @@ public class I18nPageEditor extends AbstractTextEditor {
         try {
             return super.getAdapter(required);
         } catch (NullPointerException e) {
+            // AbstractTextEditor is not fully initialised in this context
+            // (no document/editor-input), so adapter factories from other
+            // plugins (e.g. SDBG) may throw NPE when they inspect the
+            // editor state.  Downgrade to WARNING to avoid cluttering the
+            // Eclipse error log with misleading ERROR entries.
             RBEPlugin.getDefault().getLog().log(new Status(
-                    Status.ERROR, RBEPlugin.ID, 
+                    Status.WARNING, RBEPlugin.ID, 
                     "Got a NPE from AbstractTextEditor#getAdapter(Class<T>) "
                   + "for adapter class: " + required, e));
             return null;
