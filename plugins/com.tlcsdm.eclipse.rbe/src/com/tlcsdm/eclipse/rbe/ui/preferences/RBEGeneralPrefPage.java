@@ -121,7 +121,7 @@ public class RBEGeneralPrefPage extends AbstractRBEPrefPage {
       filterLocalesLabel.setToolTipText(RBEPlugin.getString("prefs.filterLocales.tooltip"));
       filterLocales = new Text(field, SWT.BORDER);
       filterLocales.setText(prefs.getString(RBEPreferences.FILTER_LOCALES_STRING_MATCHERS));
-      filterLocales.setTextLimit(22);
+      filterLocales.setTextLimit(100);
       setWidthInChars(filterLocales, 16);
 
       // Convert encoded to unicode?

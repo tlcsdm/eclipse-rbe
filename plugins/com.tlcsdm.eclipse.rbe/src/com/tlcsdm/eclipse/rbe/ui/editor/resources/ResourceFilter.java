@@ -16,8 +16,10 @@
 package com.tlcsdm.eclipse.rbe.ui.editor.resources;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Set;
 import java.util.StringTokenizer;
 import java.util.regex.Matcher;
@@ -55,13 +57,19 @@ public class ResourceFilter implements IPropertyChangeListener {
      */
     private static final Locale ROOT_LOCALE = new Locale(""); //$NON-NLS-1$
 
-    private static final Pattern COUNTRY_MATCHER =
+    private static final Pattern COUNTRY_PATTERN =
             Pattern.compile("_([a-z]{2,3})_([A-Z]{2})"); //$NON-NLS-1$
-    private static final Pattern VARIANT_MATCHER =
+    private static final Pattern VARIANT_PATTERN =
             Pattern.compile("_([a-z]{2,3})_([A-Z]{2})_(\\w*)"); //$NON-NLS-1$
 
     /** Cached compiled glob patterns; {@code null} means the cache is stale. */
-    private static Pattern[] cachedCompiledLocaleFilter;
+    private static Pattern[] cachedLocaleFilterPatterns;
+
+    /**
+     * Cache of compiled {@link Pattern}s for the properties-file regex strings to avoid
+     * recompiling the same expression on every call to {@link #isResourceDisplayed}.
+     */
+    private static final Map<String, Pattern> cachedResourcePatterns = new HashMap<>();
 
     private static final ResourceFilter INSTANCE = new ResourceFilter();
 
@@ -76,10 +84,11 @@ public class ResourceFilter implements IPropertyChangeListener {
     }
 
     /**
-     * Invalidates the compiled-pattern cache when the preference value changes.
+     * Invalidates both internal caches when the locale filter preference value changes.
      */
-    private static void onLocaleFilterChange() {
-        cachedCompiledLocaleFilter = null;
+    private static synchronized void onLocaleFilterChange() {
+        cachedLocaleFilterPatterns = null;
+        cachedResourcePatterns.clear();
     }
 
     /**
@@ -98,7 +107,7 @@ public class ResourceFilter implements IPropertyChangeListener {
                     sb.append(".*"); //$NON-NLS-1$
                     break;
                 case '?':
-                    sb.append('.'); //$NON-NLS-1$
+                    sb.append('.');
                     break;
                 // Escape regex meta-characters that may appear in user input
                 case '.': case '\\': case '[': case ']':
@@ -121,19 +130,35 @@ public class ResourceFilter implements IPropertyChangeListener {
      * @return compiled patterns, never {@code null}
      */
     private static synchronized Pattern[] getFilterLocalesPatterns() {
-        if (cachedCompiledLocaleFilter != null) {
-            return cachedCompiledLocaleFilter;
+        if (cachedLocaleFilterPatterns != null) {
+            return cachedLocaleFilterPatterns;
         }
 
         String pref = PREFS.getString(RBEPreferences.FILTER_LOCALES_STRING_MATCHERS);
         StringTokenizer tokenizer = new StringTokenizer(pref, ";, ", false); //$NON-NLS-1$
 
-        cachedCompiledLocaleFilter = new Pattern[tokenizer.countTokens()];
+        cachedLocaleFilterPatterns = new Pattern[tokenizer.countTokens()];
         int i = 0;
         while (tokenizer.hasMoreTokens()) {
-            cachedCompiledLocaleFilter[i++] = compileGlob(tokenizer.nextToken().trim());
+            cachedLocaleFilterPatterns[i++] = compileGlob(tokenizer.nextToken().trim());
         }
-        return cachedCompiledLocaleFilter;
+        return cachedLocaleFilterPatterns;
+    }
+
+    /**
+     * Returns a compiled {@link Pattern} for the given properties-file regex string, using a
+     * cache to avoid redundant compilation across repeated calls for the same bundle.
+     *
+     * @param regex the regular expression string
+     * @return the compiled {@link Pattern}
+     */
+    private static synchronized Pattern getResourcePattern(String regex) {
+        Pattern p = cachedResourcePatterns.get(regex);
+        if (p == null) {
+            p = Pattern.compile(regex);
+            cachedResourcePatterns.put(regex, p);
+        }
+        return p;
     }
 
     /**
@@ -146,7 +171,7 @@ public class ResourceFilter implements IPropertyChangeListener {
      * @param locales locales to filter
      * @return filtered locales; may be empty but never {@code null}
      */
-    private Locale[] filterLocales(Locale[] locales) {
+    private static Locale[] filterLocales(Locale[] locales) {
         Pattern[] patterns = getFilterLocalesPatterns();
         Set<Locale> already = new HashSet<>();
         ArrayList<Locale> result = new ArrayList<>();
@@ -199,8 +224,8 @@ public class ResourceFilter implements IPropertyChangeListener {
      * @param regex        the properties-file regular expression with the groups listed above
      * @return {@code true} if the resource should be displayed
      */
-    public boolean isResourceDisplayed(String resourceName, String regex) {
-        Matcher resourceMatcher = Pattern.compile(regex).matcher(resourceName);
+    public static boolean isResourceDisplayed(String resourceName, String regex) {
+        Matcher resourceMatcher = getResourcePattern(regex).matcher(resourceName);
         // The calling method already verified the name matches; invoke matches() to populate groups.
         resourceMatcher.matches();
 
@@ -220,13 +245,13 @@ public class ResourceFilter implements IPropertyChangeListener {
 
         } else if (localeWithCountry != null) {
             // Language + country, e.g. "_de_DE"
-            Matcher cm = COUNTRY_MATCHER.matcher(localeWithCountry);
+            Matcher cm = COUNTRY_PATTERN.matcher(localeWithCountry);
             cm.matches();
             resourceLocale = new Locale(cm.group(1), cm.group(2));
 
         } else {
             // Language + country + variant, e.g. "_de_DE_var"
-            Matcher vm = VARIANT_MATCHER.matcher(localeWithVariant);
+            Matcher vm = VARIANT_PATTERN.matcher(localeWithVariant);
             if (!vm.matches()) {
                 return false;
             }
