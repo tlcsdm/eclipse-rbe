@@ -77,6 +77,8 @@ public class RBEPreferenceInitializer extends AbstractPreferenceInitializer {
 
         prefs.setDefault(RBEPreferences.KEEP_EMPTY_FIELDS, true);
 
+        prefs.setDefault(RBEPreferences.SORT_KEYS, false);
+
         // Reporting/Performance
         prefs.setDefault(RBEPreferences.REPORT_MISSING_VALUES, true);
         prefs.setDefault(RBEPreferences.REPORT_DUPL_VALUES, true);

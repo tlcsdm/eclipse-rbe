@@ -60,6 +60,8 @@ public class RBEFormattingPrefPage extends AbstractRBEPrefPage {
     private Button[] newLineTypes = new Button[3];
 
     private Button keepEmptyFields;
+
+    private Button sortKeys;
     
     /**
      * Constructor.
@@ -267,6 +269,13 @@ public class RBEFormattingPrefPage extends AbstractRBEPrefPage {
                 RBEPreferences.KEEP_EMPTY_FIELDS));
         new Label(field, SWT.NONE).setText(
                 RBEPlugin.getString("prefs.keepEmptyFields"));
+
+        // Sort keys alphabetically?
+        field = createFieldComposite(composite);
+        sortKeys = new Button(field, SWT.CHECK);
+        sortKeys.setSelection(prefs.getBoolean(RBEPreferences.SORT_KEYS));
+        new Label(field, SWT.NONE).setText(
+                RBEPlugin.getString("prefs.sortKeys"));
         
         refreshEnabledStatuses();
         
@@ -314,6 +323,8 @@ public class RBEFormattingPrefPage extends AbstractRBEPrefPage {
         }
         prefs.setValue(RBEPreferences.KEEP_EMPTY_FIELDS,
                 keepEmptyFields.getSelection());
+        prefs.setValue(RBEPreferences.SORT_KEYS,
+                sortKeys.getSelection());
         refreshEnabledStatuses();
         return super.performOk();
     }
@@ -356,6 +367,8 @@ public class RBEFormattingPrefPage extends AbstractRBEPrefPage {
                 RBEPreferences.NEW_LINE_TYPE)].setSelection(true);
         keepEmptyFields.setSelection(
                 prefs.getDefaultBoolean(RBEPreferences.KEEP_EMPTY_FIELDS));
+        sortKeys.setSelection(
+                prefs.getDefaultBoolean(RBEPreferences.SORT_KEYS));
         refreshEnabledStatuses();
         super.performDefaults();
     }

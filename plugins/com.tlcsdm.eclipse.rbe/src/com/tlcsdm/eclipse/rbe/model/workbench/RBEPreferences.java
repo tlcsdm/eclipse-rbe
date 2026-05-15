@@ -135,6 +135,9 @@ public final class RBEPreferences {
 
     /** Keep empty fields. */
     public static final String KEEP_EMPTY_FIELDS = "keepEmptyFields";
+
+    /** Sort keys alphabetically when generating file. */
+    public static final String SORT_KEYS = "sortKeys";
     
     public static final String MIN_HEIGHT = "minHeight";
 //    public static final String AUTO_ADJUST = "autoAdjust";                               
@@ -350,6 +353,14 @@ public final class RBEPreferences {
      */
     public static boolean getKeepEmptyFields() {
         return PREFS.getBoolean(KEEP_EMPTY_FIELDS);
+    }
+
+    /**
+     * Gets whether keys should be sorted alphabetically when generating file.
+     * @return <code>true</code> if keys should be sorted alphabetically.
+     */
+    public static boolean getSortKeys() {
+        return PREFS.getBoolean(SORT_KEYS);
     }
 
     /**
