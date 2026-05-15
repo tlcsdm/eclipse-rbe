@@ -87,5 +87,23 @@
             The font for the editors on the properties tab
         </description>
     </fontDefinition>
+    <colorDefinition
+        categoryId="com.tlcsdm.eclipse.rbe.ui.preferences.themeElementCategory"
+        id="com.tlcsdm.eclipse.rbe.ui.preferences.textColorDefinition"
+        label="Properties editor text color"
+        defaultsTo="org.eclipse.ui.workbench.ACTIVE_TAB_TEXT_COLOR">
+        <description>
+            The foreground text color for the editors on the properties tab
+        </description>
+    </colorDefinition>
+    <colorDefinition
+        categoryId="com.tlcsdm.eclipse.rbe.ui.preferences.themeElementCategory"
+        id="com.tlcsdm.eclipse.rbe.ui.preferences.textCommentedColorDefinition"
+        label="Properties editor commented text color"
+        defaultsTo="org.eclipse.ui.workbench.INACTIVE_TAB_TEXT_COLOR">
+        <description>
+            The foreground text color for commented entries on the properties tab
+        </description>
+    </colorDefinition>
   </extension>
 </plugin>
