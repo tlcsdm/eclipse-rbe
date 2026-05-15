@@ -81,7 +81,7 @@ public final class PropertiesGenerator {
                 text.append(GENERATED_BY);
                 text.append(SYSTEM_LINE_SEP);
             }
-            text.append(headComment);
+            text.append(headComment.replace("\n", lineBreak));
         }
         
         // Format
@@ -134,7 +134,7 @@ public final class PropertiesGenerator {
                     value = PropertiesGenerator.convertUnicodeToEncoded(value);
                 }
                 if (comment != null && comment.length() > 0) {
-                    text.append(comment);
+                    text.append(comment.replace("\n", lineBreak));
                 }
                 appendKey(text, key, equalIndex, bundleEntry.isCommented());
                 appendValue(text, value, equalIndex, bundleEntry.isCommented());

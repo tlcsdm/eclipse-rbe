@@ -26,10 +26,6 @@ import com.tlcsdm.eclipse.rbe.model.workbench.RBEPreferences;
  */
 public final class PropertiesParser {
 
-    /** System line separator. */
-    private static final String SYSTEM_LINE_SEPARATOR = 
-            System.getProperty("line.separator");
-    
     /** Characters accepted as key value separators. */
     private static final String KEY_VALUE_SEPARATORS = "=:";
     
@@ -136,10 +132,10 @@ public final class PropertiesParser {
                     (lineBuf.charAt(0) == '#' || lineBuf.charAt(0) == '!')) {
                if (!doneWithFileComment) {
                     fileComment.append(lineBuf);
-                    fileComment.append(SYSTEM_LINE_SEPARATOR);
+                    fileComment.append("\n");
                 } else {
                     lineComment.append(lineBuf);
-                    lineComment.append(SYSTEM_LINE_SEPARATOR);
+                    lineComment.append("\n");
                 }
             // handle blank or unsupported line
             } else {
