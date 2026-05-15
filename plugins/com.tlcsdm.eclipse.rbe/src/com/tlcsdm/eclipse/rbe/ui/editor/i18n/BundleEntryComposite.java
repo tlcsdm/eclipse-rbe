@@ -689,8 +689,8 @@ public class BundleEntryComposite extends Composite {
 
             // show language image when country image is not available
 
-            String countryLanguage = countryLocale.getLanguage();
-            String imageName = "countries/" + countryLanguage.toLowerCase() + ".gif";
+            String languageCode = countryLocale.getLanguage();
+            String imageName = "countries/" + languageCode.toLowerCase() + ".gif";
 
             image = UIUtils.getImage(imageName);
         }
