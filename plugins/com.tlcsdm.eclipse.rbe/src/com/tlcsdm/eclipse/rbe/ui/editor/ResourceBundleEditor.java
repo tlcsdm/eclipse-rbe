@@ -66,6 +66,7 @@ public class ResourceBundleEditor extends MultiPageEditorPart
     
     private ResourceManager resourceMediator;
     private I18nPage i18nPage;
+    private I18nPageEditor i18nPageEditor;
     /** New locale page. */
     private NewLocalePage newLocalePage;
     
@@ -135,6 +136,7 @@ public class ResourceBundleEditor extends MultiPageEditorPart
         try {
            I18nPageEditor i18PageEditor = new I18nPageEditor(resourceMediator);
            index = addPage(i18PageEditor, null);
+           i18nPageEditor = i18PageEditor;
            i18nPage = i18PageEditor.getI18nPage();
            setPageText(index, RBEPlugin.getString("editor.properties"));
            setPageImage(index, UIUtils.getImage(UIUtils.IMAGE_RESOURCE_BUNDLE));
@@ -191,6 +193,9 @@ public class ResourceBundleEditor extends MultiPageEditorPart
             setPageImage(index, 
                     UIUtils.getImage(UIUtils.IMAGE_PROPERTIES_FILE));
             i18nPage.refreshPage();
+            if (i18nPageEditor != null) {
+                i18nPageEditor.refreshActiveView();
+            }
             setActivePage(0);
             // re-set the content to trigger dirty state 
             sourceEditor.setContent(sourceEditor.getContent()); 
@@ -306,6 +311,9 @@ public class ResourceBundleEditor extends MultiPageEditorPart
         if (newPageIndex == 0) {  // switched to first page
             resourceMediator.reloadProperties();
             i18nPage.refreshTextBoxes();
+            if (i18nPageEditor != null) {
+                i18nPageEditor.refreshActiveView();
+            }
             lastEditor = null; // reset lastEditor
             return;
         }
@@ -392,6 +400,9 @@ public class ResourceBundleEditor extends MultiPageEditorPart
                if ( i18nPage != null && !i18nPage.isDisposed() ) {
                   resourceMediator.reloadProperties();
                   i18nPage.refreshTextBoxes();
+                  if (i18nPageEditor != null) {
+                      i18nPageEditor.refreshActiveView();
+                  }
                }
             });
          }

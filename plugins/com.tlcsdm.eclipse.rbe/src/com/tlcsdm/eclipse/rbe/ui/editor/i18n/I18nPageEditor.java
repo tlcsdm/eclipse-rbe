@@ -13,12 +13,33 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+/*
+ * Copyright (C) 2003-2017  Pascal Essiembre
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.tlcsdm.eclipse.rbe.ui.editor.i18n;
 
 import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.text.IFindReplaceTarget;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.StackLayout;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.texteditor.AbstractTextEditor;
 import org.eclipse.ui.texteditor.FindNextAction;
@@ -26,11 +47,17 @@ import org.eclipse.ui.texteditor.FindReplaceAction;
 import org.eclipse.ui.texteditor.IWorkbenchActionDefinitionIds;
 
 import com.tlcsdm.eclipse.rbe.RBEPlugin;
+import com.tlcsdm.eclipse.rbe.model.workbench.RBEPreferences;
 import com.tlcsdm.eclipse.rbe.ui.editor.resources.ResourceManager;
 
 public class I18nPageEditor extends AbstractTextEditor {
 
     private I18nPage i18nPage;
+    private I18nTableView i18nTableView;
+    private Composite viewStack;
+    private StackLayout viewStackLayout;
+    private Button formViewButton;
+    private Button tableViewButton;
     private ResourceManager resourceMediator;
 
     private FindReplaceAction findReplaceAction;
@@ -47,7 +74,53 @@ public class I18nPageEditor extends AbstractTextEditor {
 
     @Override
     public void createPartControl(Composite parent) {
-        i18nPage = new I18nPage(parent, SWT.NONE, resourceMediator);
+        Composite root = new Composite(parent, SWT.NONE);
+        GridLayout rootLayout = new GridLayout(1, false);
+        rootLayout.marginWidth = 0;
+        rootLayout.marginHeight = 0;
+        rootLayout.verticalSpacing = 0;
+        root.setLayout(rootLayout);
+
+        // Top bar with view-mode toggle buttons.
+        Composite toolBar = new Composite(root, SWT.NONE);
+        GridLayout tbLayout = new GridLayout(2, false);
+        tbLayout.marginHeight = 2;
+        tbLayout.marginWidth = 2;
+        toolBar.setLayout(tbLayout);
+        toolBar.setLayoutData(
+                new GridData(SWT.FILL, SWT.TOP, true, false));
+
+        formViewButton = new Button(toolBar, SWT.TOGGLE);
+        formViewButton.setText(RBEPlugin.getString("editor.view.form"));
+        formViewButton.setToolTipText(
+                RBEPlugin.getString("editor.view.form.tooltip"));
+
+        tableViewButton = new Button(toolBar, SWT.TOGGLE);
+        tableViewButton.setText(RBEPlugin.getString("editor.view.table"));
+        tableViewButton.setToolTipText(
+                RBEPlugin.getString("editor.view.table.tooltip"));
+
+        // Stack of the two views.
+        viewStack = new Composite(root, SWT.NONE);
+        viewStackLayout = new StackLayout();
+        viewStack.setLayout(viewStackLayout);
+        viewStack.setLayoutData(
+                new GridData(SWT.FILL, SWT.FILL, true, true));
+
+        i18nPage = new I18nPage(viewStack, SWT.NONE, resourceMediator);
+        i18nTableView = new I18nTableView(
+                viewStack, SWT.NONE, resourceMediator);
+
+        SelectionAdapter switchListener = new SelectionAdapter() {
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+                showTableView(e.widget == tableViewButton);
+            }
+        };
+        formViewButton.addSelectionListener(switchListener);
+        tableViewButton.addSelectionListener(switchListener);
+
+        showTableView(RBEPreferences.getTableView());
 
         findReplaceAction = new FindReplaceAction(RBEPlugin.getDefault()
                 .getResourceBundle(), null, i18nPage.getShell(),
@@ -80,6 +153,32 @@ public class I18nPageEditor extends AbstractTextEditor {
         };
         findPreviousAction.setActionDefinitionId(
                 IWorkbenchActionDefinitionIds.FIND_PREVIOUS);
+    }
+
+    private void showTableView(boolean tableView) {
+        if (tableView) {
+            viewStackLayout.topControl = i18nTableView;
+            i18nTableView.refresh();
+        } else {
+            viewStackLayout.topControl = i18nPage;
+        }
+        formViewButton.setSelection(!tableView);
+        tableViewButton.setSelection(tableView);
+        viewStack.layout();
+        RBEPreferences.setTableView(tableView);
+    }
+
+    /**
+     * Refreshes whichever view is currently active. Called when the model
+     * changes (e.g. files reloaded, new locale added).
+     */
+    public void refreshActiveView() {
+        if (i18nTableView != null && !i18nTableView.isDisposed()) {
+            i18nTableView.refresh();
+        }
+        if (i18nPage != null && !i18nPage.isDisposed()) {
+            i18nPage.refreshTextBoxes();
+        }
     }
 
     @SuppressWarnings("unchecked")

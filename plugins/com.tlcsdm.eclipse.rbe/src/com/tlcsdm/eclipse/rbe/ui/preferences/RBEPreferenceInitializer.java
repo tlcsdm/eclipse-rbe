@@ -90,6 +90,8 @@ public class RBEPreferenceInitializer extends AbstractPreferenceInitializer {
         prefs.setDefault(RBEPreferences.MIN_HEIGHT, 80);
 //        prefs.setDefault(RBEPreferences.AUTO_ADJUST, true);
 
+        prefs.setDefault(RBEPreferences.TABLE_VIEW, false);
+
     }
 
 }

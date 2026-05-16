@@ -142,6 +142,9 @@ public final class RBEPreferences {
     public static final String MIN_HEIGHT = "minHeight";
 //    public static final String AUTO_ADJUST = "autoAdjust";                               
 
+    /** Display the i18n page using a tabular (table-based) layout. */
+    public static final String TABLE_VIEW = "tableView";
+
     
     public static final String PREFERENCE_ID = "eclipse-rbe-preferences";
     
@@ -214,6 +217,24 @@ public final class RBEPreferences {
   
     public static int getMinHeight() {
         return PREFS.getInt(MIN_HEIGHT);
+    }
+
+    /**
+     * Gets whether the i18n page should default to a tabular (table-based)
+     * layout instead of the form-based layout.
+     * @return <code>true</code> if the table view is preferred
+     */
+    public static boolean getTableView() {
+        return PREFS.getBoolean(TABLE_VIEW);
+    }
+
+    /**
+     * Persist the user's preferred i18n page layout.
+     * @param tableView <code>true</code> to remember the table view as the
+     *                  preferred layout
+     */
+    public static void setTableView(boolean tableView) {
+        PREFS.setValue(TABLE_VIEW, tableView);
     }
 
     
