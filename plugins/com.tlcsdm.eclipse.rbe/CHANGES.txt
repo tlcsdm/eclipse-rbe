@@ -1,5 +1,22 @@
 Here is an overview of changes for each release:
 
+Release 1.1.1 (2026)
+--------------------------
+- Sort editor languages using Collator locale rules.
+- Port "Displayed Locales" filter from upstream.
+- Show language banner image as fallback when country image is unavailable.
+- Prevent text corruption when wrapping lines with no spaces.
+- Downgrade adapter NPE log severity from ERROR to WARNING.
+- Correct French typo in bundle_fr.properties.
+- Honor forced newline style for comment output on Windows.
+- Change KEEP_EMPTY_FIELDS default value to true.
+- Update Georgian flag (ge.gif) to Five Crosses design.
+- Add Persian (Farsi) language support.
+- Recalculate equalIndex per key when alignment is disabled for grouped keys.
+- Wrap ResourceChangeListener UI updates in asyncExec to fix invalid thread access.
+- Fix unreadable text in DevStyle dark theme.
+- Add opt-in preference to sort keys alphabetically on save.
+
 Release 1.1.0 (2026)
 --------------------------
 - Built with 2024-06 and Java 17.
