@@ -114,4 +114,12 @@
       </toc>
    </extension>
 
+   <extension
+         point="org.eclipse.help.contexts">
+      <contexts
+            file="help/contexts.xml"
+            plugin="com.tlcsdm.eclipse.rbe">
+      </contexts>
+   </extension>
+
 </plugin>

@@ -1,18 +1,3 @@
-/*
- * Copyright (C) 2003-2017  Pascal Essiembre
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
 /*******************************************************************************
  * Copyright (c) 2026 Tlcsdm contributors.
  *
@@ -38,6 +23,7 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.texteditor.AbstractTextEditor;
 import org.eclipse.ui.texteditor.FindNextAction;
 import org.eclipse.ui.texteditor.FindReplaceAction;
@@ -118,6 +104,15 @@ public class I18nPageEditor extends AbstractTextEditor {
         tableViewButton.addSelectionListener(switchListener);
 
         showTableView(RBEPreferences.getTableView());
+
+        // Attach context-sensitive F1 help.
+        String pluginId = RBEPlugin.getDefault().getBundle().getSymbolicName();
+        PlatformUI.getWorkbench().getHelpSystem().setHelp(
+                toolBar, pluginId + ".view_toggle");
+        PlatformUI.getWorkbench().getHelpSystem().setHelp(
+                i18nPage, pluginId + ".key_tree");
+        PlatformUI.getWorkbench().getHelpSystem().setHelp(
+                i18nTableView, pluginId + ".table_view");
 
         findReplaceAction = new FindReplaceAction(RBEPlugin.getDefault()
                 .getResourceBundle(), null, i18nPage.getShell(),
