@@ -47,6 +47,27 @@ When making non-trivial changes:
 - mention related metadata or configuration files that may also need updates
 - call out risks if internal APIs or version-sensitive features are involved
 
+### 7. License headers for new files
+All new Java (or other source) files added to this repository must carry the Eclipse Public License 2.0 (EPL-2.0) header.
+Use the following template exactly:
+
+```java
+/*******************************************************************************
+ * Copyright (c) <year> Tlcsdm contributors.
+ *
+ * This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License 2.0 which is available at
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
+ *
+ * Contributors:
+ *     Tlcsdm - <brief description of the contribution>
+ *******************************************************************************/
+```
+
+Do **not** copy the old Apache 2.0 header from existing (pre-fork) files; those are retained for backward-compatibility only.
+
 ## Skill routing
 When a task involves Eclipse plugin specific work, also apply the appropriate skill guidance from:
 

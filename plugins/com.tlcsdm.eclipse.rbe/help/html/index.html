@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>ResourceBundle Editor – Overview</title>
+  <style>
+    body { font-family: Arial, Helvetica, sans-serif; margin: 20px; }
+    h1 { border-bottom: 2px solid #4a90d9; padding-bottom: 6px; }
+    h2 { border-bottom: 1px solid #ccc; padding-bottom: 4px; }
+    code { background: #f4f4f4; padding: 0 3px; border-radius: 2px; }
+    ul li { margin-bottom: 4px; }
+  </style>
+</head>
+<body>
+<h1>ResourceBundle Editor</h1>
+
+<p>
+  The <strong>ResourceBundle Editor</strong> is an Eclipse plug-in that lets you view and edit all
+  <code>.properties</code> files belonging to a Java resource bundle at the same time.
+  Instead of opening each locale file separately, the editor aggregates them into a
+  single multi-page editor so you can manage translations side-by-side.
+</p>
+
+<h2>Main Features</h2>
+<ul>
+  <li>Edit all locale <code>.properties</code> files in one editor window.</li>
+  <li>Two layout modes: <strong>Form View</strong> (classic) and <strong>Table View</strong> (new in 1.2.0).</li>
+  <li>Hierarchical or flat key tree for fast navigation.</li>
+  <li>Warning icons for missing and duplicate translations.</li>
+  <li>Unicode ↔ <code>&#92;uXXXX</code> conversion on read/write.</li>
+  <li>Key operations: add, rename, duplicate, delete, comment/uncomment.</li>
+  <li>Configurable key grouping, sorting and formatting.</li>
+  <li>New ResourceBundle wizard to create a bundle with multiple locales at once.</li>
+</ul>
+
+<h2>Getting Started</h2>
+<ol>
+  <li>Open any <code>*.properties</code> file that belongs to a bundle. Eclipse will offer to
+      open it with the <em>ResourceBundle Editor</em>.</li>
+  <li>The editor opens showing all related locale files. The first tab is the
+      <strong>Properties</strong> page where you edit translations.</li>
+  <li>Use the <strong>Form view</strong> / <strong>Table view</strong> toggle buttons at the
+      top of the Properties page to switch layout.</li>
+</ol>
+
+<p>See the other help pages for detailed descriptions of each UI element and preference.</p>
+</body>
+</html>

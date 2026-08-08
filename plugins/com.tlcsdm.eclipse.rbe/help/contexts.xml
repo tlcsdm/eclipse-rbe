@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<contexts>
+
+   <!-- Properties page: form / table toggle toolbar -->
+   <context id="view_toggle" title="View toggle">
+      <description>Switch between Form view and Table view for the resource bundle editor.</description>
+      <topic label="Editor UI – Form View" href="help/html/editor_ui.html#form-view"/>
+      <topic label="Editor UI – Table View" href="help/html/editor_ui.html#table-view"/>
+   </context>
+
+   <!-- Form view: key tree panel -->
+   <context id="key_tree" title="Key tree">
+      <description>The key tree displays all keys in the resource bundle. Keys can be shown flat or hierarchically and filtered to show only incomplete translations.</description>
+      <topic label="Editor UI – Key Tree" href="help/html/editor_ui.html#key-tree"/>
+   </context>
+
+   <!-- Form view: individual value editor for one locale -->
+   <context id="value_editor" title="Value editor">
+      <description>Edit the translation value for the selected key in a specific locale. Use the Comment checkbox to comment out the entry. Duplicate and similar value indicators are shown when detected.</description>
+      <topic label="Editor UI – Value Editors" href="help/html/editor_ui.html#value-editors"/>
+   </context>
+
+   <!-- Table view -->
+   <context id="table_view" title="Table view">
+      <description>Shows all keys and locales in a spreadsheet-style table. Click a cell or press F2 to edit. Changes are saved together with all other edits.</description>
+      <topic label="Editor UI – Table View" href="help/html/editor_ui.html#table-view"/>
+   </context>
+
+   <!-- New locale page -->
+   <context id="new_locale" title="New locale">
+      <description>Add a new locale to the resource bundle. Enter the language, optional country and variant, then click Create.</description>
+      <topic label="Editor UI – New Locale Page" href="help/html/editor_ui.html#new-locale"/>
+   </context>
+
+   <!-- General preferences page -->
+   <context id="prefs_general" title="General preferences">
+      <description>Configure general settings for the ResourceBundle Editor such as Unicode conversion, key tree defaults and locale filtering.</description>
+      <topic label="Preferences – General" href="help/html/preferences.html#general"/>
+   </context>
+
+   <!-- Formatting preferences page -->
+   <context id="prefs_formatting" title="Formatting preferences">
+      <description>Configure how .properties files are formatted when saved, including equal-sign alignment, key grouping and line wrapping.</description>
+      <topic label="Preferences – Formatting" href="help/html/preferences.html#formatting"/>
+   </context>
+
+   <!-- Performance preferences page -->
+   <context id="prefs_performance" title="Performance preferences">
+      <description>Enable or disable potentially expensive reporting features such as missing-value detection and similar/duplicate-value detection.</description>
+      <topic label="Preferences – Performance" href="help/html/preferences.html#performance"/>
+   </context>
+
+   <!-- New ResourceBundle wizard -->
+   <context id="wizard" title="New ResourceBundle wizard">
+      <description>Create a set of .properties files for a new resource bundle. Select a folder, enter a base name and add the desired locales.</description>
+      <topic label="New ResourceBundle Wizard" href="help/html/wizard.html"/>
+   </context>
+
+</contexts>

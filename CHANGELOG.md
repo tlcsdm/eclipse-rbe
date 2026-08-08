@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.2.0] - 2026
+
+### Added
+- Add a tabular (table-based) view for editing resource bundles, switchable from the form view via toggle buttons at the top of the editor; the selected view mode is remembered across sessions.
+
+### Changed
+- Bumped version to 1.2.0.
+
 ## [1.1.1] - 2026
 
 ### Added

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>ResourceBundle Editor – New ResourceBundle Wizard</title>
+  <style>
+    body { font-family: Arial, Helvetica, sans-serif; margin: 20px; }
+    h1 { border-bottom: 2px solid #4a90d9; padding-bottom: 6px; }
+    code { background: #f4f4f4; padding: 0 3px; border-radius: 2px; }
+    ol li { margin-bottom: 6px; }
+  </style>
+</head>
+<body>
+<h1>New ResourceBundle Wizard</h1>
+
+<p>
+  The <strong>New ResourceBundle</strong> wizard creates a set of <code>.properties</code> files
+  in one step — one file per selected locale. Open it via
+  <strong>File &gt; New &gt; Other… &gt; ResourceBundle &gt; ResourceBundle</strong>.
+</p>
+
+<h2>Wizard Fields</h2>
+<ol>
+  <li>
+    <strong>Folder</strong> – the project folder (source directory) where the files will be created.
+    Use the <strong>Browse…</strong> button to pick a folder from the workspace.
+  </li>
+  <li>
+    <strong>Base name</strong> – the name shared by all generated files, without locale suffix or
+    extension. For example, entering <code>messages</code> will create
+    <code>messages.properties</code>, <code>messages_fr.properties</code>, etc.
+    Do not include a file extension; it is added automatically.
+  </li>
+  <li>
+    <strong>Locales</strong> – use the locale selector on the right to pick a language, country
+    and optional variant, then click <strong>Add</strong> to add it to the list of selected locales.
+    Select an entry in the list and click <strong>Remove</strong> to remove it.
+    A default (language-neutral) locale file is always created.
+  </li>
+</ol>
+
+<p>
+  Click <strong>Finish</strong> to generate the files and open the new bundle in the
+  ResourceBundle Editor.
+</p>
+</body>
+</html>

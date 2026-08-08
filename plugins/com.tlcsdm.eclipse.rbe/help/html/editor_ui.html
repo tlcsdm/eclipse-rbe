@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>ResourceBundle Editor – Editor UI</title>
+  <style>
+    body { font-family: Arial, Helvetica, sans-serif; margin: 20px; }
+    h1 { border-bottom: 2px solid #4a90d9; padding-bottom: 6px; }
+    h2 { border-bottom: 1px solid #ccc; padding-bottom: 4px; }
+    h3 { margin-top: 20px; }
+    code { background: #f4f4f4; padding: 0 3px; border-radius: 2px; }
+    table { border-collapse: collapse; width: 100%; margin-top: 8px; }
+    th, td { border: 1px solid #ccc; padding: 6px 10px; text-align: left; }
+    th { background: #f0f0f0; }
+    .note { background: #fffbcc; border-left: 4px solid #e6c800; padding: 8px 12px; margin: 10px 0; }
+  </style>
+</head>
+<body>
+<h1>Editor UI</h1>
+
+<p>
+  When you open a <code>.properties</code> file with the ResourceBundle Editor, a multi-page editor is
+  shown. The pages are described below.
+</p>
+
+<!-- ======================================================= -->
+<h2 id="properties-page">Properties Page</h2>
+
+<p>
+  The <strong>Properties</strong> page (the first tab) is the main editing area. It contains a
+  small toolbar at the top with two toggle buttons that let you switch the layout:
+</p>
+
+<table>
+  <tr><th>Button</th><th>Description</th></tr>
+  <tr><td><strong>Form view</strong></td>
+      <td>The classic layout. A key tree is shown on the left; on the right there is one
+          text area per locale for the selected key. This is the default layout.</td></tr>
+  <tr><td><strong>Table view</strong></td>
+      <td>A spreadsheet-style layout (new in 1.2.0). Each row represents a key and each
+          column represents a locale. Cells are editable directly in the table. Ideal for
+          quickly scanning and filling missing translations.</td></tr>
+</table>
+
+<div class="note">
+  The selected layout is saved as a preference and restored the next time you start Eclipse.
+</div>
+
+<!-- ======================================================= -->
+<h2 id="form-view">Form View</h2>
+
+<p>The form view has two panels:</p>
+
+<h3 id="key-tree">Key Tree (left panel)</h3>
+<p>
+  The key tree lists all keys in the resource bundle. It can be shown in two modes:
+</p>
+<ul>
+  <li><strong>Hierarchical</strong> – keys are split on the separator character (default <code>.</code>)
+      and shown as a tree.</li>
+  <li><strong>Flat</strong> – keys are shown as a plain list.</li>
+</ul>
+
+<p>The toolbar above the tree provides the following actions:</p>
+<table>
+  <tr><th>Action</th><th>Description</th></tr>
+  <tr><td>Add</td><td>Creates a new key in the bundle.</td></tr>
+  <tr><td>Rename</td><td>Renames the selected key (or key group) across all locale files.</td></tr>
+  <tr><td>Duplicate</td><td>Copies the selected key (or key group) to a new name.</td></tr>
+  <tr><td>Delete</td><td>Removes the selected key (or key group) from all locale files.</td></tr>
+  <tr><td>Comment / Uncomment</td><td>Comments or uncomments the selected key.</td></tr>
+  <tr><td>Copy Key</td><td>Copies the key name to the clipboard.</td></tr>
+  <tr><td>Expand All / Collapse All</td><td>Expands or collapses the entire key tree.</td></tr>
+  <tr><td>Flat / Tree layout</td><td>Toggles between the flat and hierarchical tree layout.</td></tr>
+  <tr><td>Show only incomplete</td><td>Filters the tree to show only keys that have at least one missing translation.</td></tr>
+</table>
+
+<p>A filter text field lets you type part of a key name to search the tree.</p>
+
+<h3 id="value-editors">Value Editors (right panel)</h3>
+<p>
+  For the key selected in the tree, one text area is shown per locale. Each area has:
+</p>
+<ul>
+  <li>A locale flag and name label at the top. Click the flag/label to jump to the
+      corresponding source editor tab.</li>
+  <li>A <strong>Comment</strong> checkbox – when checked, the entry is written as a comment
+      in the <code>.properties</code> file.</li>
+  <li>A similar-value icon (appears when another key in the same locale has a very
+      similar value). Click it for details.</li>
+  <li>A duplicate-value icon (appears when another key in the same locale has an
+      identical value). Click it for details.</li>
+</ul>
+
+<!-- ======================================================= -->
+<h2 id="table-view">Table View</h2>
+<p>
+  The table view (available from version 1.2.0) shows a grid where:
+</p>
+<ul>
+  <li>The leftmost column is the <strong>Key</strong> column (read-only).</li>
+  <li>Each subsequent column represents a locale. The column header shows the
+      display name of the locale.</li>
+  <li>Cells are fully editable. Press <kbd>F2</kbd> or double-click a cell to enter
+      edit mode; press <kbd>Enter</kbd> or click elsewhere to commit.</li>
+  <li>Edits are immediately reflected in the underlying model and in the source
+      editors, and the editor is marked dirty until you save.</li>
+</ul>
+
+<div class="note">
+  The table view does not yet expose the comment/uncomment state or show
+  similar/duplicate indicators. Use the form view for those advanced operations.
+</div>
+
+<!-- ======================================================= -->
+<h2 id="source-editors">Source Editors</h2>
+<p>
+  For every locale in the bundle there is a dedicated source editor tab that shows
+  the raw <code>.properties</code> file content. You can make low-level edits here; when
+  you switch back to the Properties page the changes are reloaded automatically.
+</p>
+
+<!-- ======================================================= -->
+<h2 id="new-locale">New Locale Page</h2>
+<p>
+  The last tab of the editor is the <strong>New…</strong> page. It lets you add a new locale
+  to the existing resource bundle without using the wizard. Enter the locale code (language,
+  country, variant) and click <strong>Create</strong>; the new <code>.properties</code> file
+  is created and immediately opened in a new source editor tab.
+</p>
+
+</body>
+</html>

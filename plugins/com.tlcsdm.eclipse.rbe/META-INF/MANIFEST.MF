@@ -3,7 +3,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: %plugin.name
 Automatic-Module-Name: com.tlcsdm.eclipse.rbe
 Bundle-SymbolicName: com.tlcsdm.eclipse.rbe;singleton:=true
-Bundle-Version: 1.1.1.qualifier
+Bundle-Version: 1.2.0.qualifier
 Bundle-Activator: com.tlcsdm.eclipse.rbe.RBEPlugin
 Bundle-RequiredExecutionEnvironment: JavaSE-17
 Bundle-ActivationPolicy: lazy
@@ -15,4 +15,5 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.ui.workbench.texteditor,
  org.eclipse.ui.editors,
  org.eclipse.ui.ide,
- org.eclipse.ui.views
+ org.eclipse.ui.views,
+ org.eclipse.help

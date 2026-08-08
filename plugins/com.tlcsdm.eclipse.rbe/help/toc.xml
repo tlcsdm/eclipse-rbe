@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?NLS TYPE="org.eclipse.help.toc"?>
+<toc label="ResourceBundle Editor" topic="help/html/index.html">
+   <topic label="Overview" href="help/html/index.html"/>
+   <topic label="Editor UI" href="help/html/editor_ui.html">
+      <topic label="Form View" href="help/html/editor_ui.html#form-view"/>
+      <topic label="Table View" href="help/html/editor_ui.html#table-view"/>
+      <topic label="Key Tree" href="help/html/editor_ui.html#key-tree"/>
+      <topic label="Value Editors" href="help/html/editor_ui.html#value-editors"/>
+      <topic label="Source Editors" href="help/html/editor_ui.html#source-editors"/>
+      <topic label="New Locale Page" href="help/html/editor_ui.html#new-locale"/>
+   </topic>
+   <topic label="Preferences" href="help/html/preferences.html">
+      <topic label="General" href="help/html/preferences.html#general"/>
+      <topic label="Formatting" href="help/html/preferences.html#formatting"/>
+      <topic label="Performance" href="help/html/preferences.html#performance"/>
+   </topic>
+   <topic label="New ResourceBundle Wizard" href="help/html/wizard.html"/>
+</toc>
