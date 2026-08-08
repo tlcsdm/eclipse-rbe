@@ -19,6 +19,7 @@ import java.util.Locale;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ColumnLabelProvider;
 import org.eclipse.jface.viewers.EditingSupport;
+import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TableViewerColumn;
 import org.eclipse.jface.viewers.TextCellEditor;
@@ -29,8 +30,11 @@ import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 
 import com.tlcsdm.eclipse.rbe.RBEPlugin;
+import com.tlcsdm.eclipse.rbe.model.DeltaEvent;
+import com.tlcsdm.eclipse.rbe.model.IDeltaListener;
 import com.tlcsdm.eclipse.rbe.model.bundle.BundleEntry;
 import com.tlcsdm.eclipse.rbe.model.bundle.BundleGroup;
+import com.tlcsdm.eclipse.rbe.model.tree.KeyTreeItem;
 import com.tlcsdm.eclipse.rbe.ui.UIUtils;
 import com.tlcsdm.eclipse.rbe.ui.editor.resources.ResourceManager;
 
@@ -63,6 +67,42 @@ public class I18nTableView extends Composite {
 
         createColumns();
         refresh();
+
+        // Mirror key selections from the Outline / key-tree so that clicking
+        // a key in the Outline scrolls the table to that row.
+        resourceMediator.getKeyTree().addListener(new IDeltaListener() {
+            @Override
+            public void add(DeltaEvent event) {
+            }
+
+            @Override
+            public void remove(DeltaEvent event) {
+            }
+
+            @Override
+            public void modify(DeltaEvent event) {
+            }
+
+            @Override
+            public void select(DeltaEvent event) {
+                if (isDisposed()) {
+                    return;
+                }
+                KeyTreeItem item = (KeyTreeItem) event.receiver();
+                if (item == null) {
+                    return;
+                }
+                String key = item.getId();
+                getDisplay().asyncExec(() -> {
+                    if (isDisposed()
+                            || tableViewer.getTable().isDisposed()) {
+                        return;
+                    }
+                    tableViewer.setSelection(
+                            new StructuredSelection(key), true);
+                });
+            }
+        });
     }
 
     private void createColumns() {
