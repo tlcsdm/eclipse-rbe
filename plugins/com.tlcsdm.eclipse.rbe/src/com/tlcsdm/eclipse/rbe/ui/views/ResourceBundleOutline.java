@@ -19,6 +19,7 @@ import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.swt.events.MouseAdapter;
@@ -36,7 +37,6 @@ import com.tlcsdm.eclipse.rbe.model.tree.KeyTreeItem;
 import com.tlcsdm.eclipse.rbe.model.workbench.RBEPreferences;
 import com.tlcsdm.eclipse.rbe.ui.UIUtils;
 import com.tlcsdm.eclipse.rbe.ui.editor.i18n.tree.KeyTreeContentProvider;
-import com.tlcsdm.eclipse.rbe.ui.editor.i18n.tree.KeyTreeLabelProvider;
 import com.tlcsdm.eclipse.rbe.ui.editor.i18n.tree.TreeViewerContributor;
 
 /**
@@ -73,7 +73,12 @@ public class ResourceBundleOutline extends ContentOutlinePage {
     public void createControl(Composite parent) {
         super.createControl(parent);
         getTreeViewer().setContentProvider(contentprovider);
-        getTreeViewer().setLabelProvider(new KeyTreeLabelProvider());
+        getTreeViewer().setLabelProvider(new LabelProvider() {
+            @Override
+            public String getText(Object element) {
+                return ((KeyTreeItem) element).getName();
+            }
+        });
         getTreeViewer().setUseHashlookup(true);
         getTreeViewer().setInput(tree);
         if (RBEPreferences.getKeyTreeExpanded()) {

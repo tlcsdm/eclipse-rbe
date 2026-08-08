@@ -149,40 +149,40 @@ public class KeyTreeLabelProvider
      * @return generated image
      */
     private Image generateImage(int iconFlags) {
-        Image image = imageRegistry.get("" + iconFlags);
-        if (image == null) {
-            // Figure background image
-            if ((iconFlags & KEY_COMMENTED) != 0) {
-                image = getRegistryImage("keyCommented.gif");
-            } else if ((iconFlags & KEY_NOT) != 0) {
-                image = getRegistryImage("keyCommented.gif");
-            } else {
-                image = getRegistryImage("key.gif");
-            }
-            
-            // Add warning icon
-            if ((iconFlags & WARNING) != 0) {
-                image = overlayImage(image, "warning.gif",
-                        OverlayImageIcon.BOTTOM_RIGHT, iconFlags);
-            } else if ((iconFlags & WARNING_GREY) != 0) {
-                image = overlayImage(image, "warningGrey.gif",
-                        OverlayImageIcon.BOTTOM_RIGHT, iconFlags);
-            }
+        // Determine base image name
+        String baseImageName;
+        if ((iconFlags & KEY_COMMENTED) != 0 || (iconFlags & KEY_NOT) != 0) {
+            baseImageName = "keyCommented.gif";
+        } else {
+            baseImageName = "key.gif";
+        }
+
+        // Determine overlay image name (if any)
+        String overlayImageName = null;
+        if ((iconFlags & WARNING) != 0) {
+            overlayImageName = "warning.gif";
+        } else if ((iconFlags & WARNING_GREY) != 0) {
+            overlayImageName = "warningGrey.gif";
+        }
+
+        Image image = getRegistryImage(baseImageName);
+        if (overlayImageName != null) {
+            image = overlayImage(image, baseImageName, overlayImageName,
+                    OverlayImageIcon.BOTTOM_RIGHT);
         }
         return image;
     }
 
     private Image overlayImage(
-            Image baseImage, String imageName, int location, int iconFlags) {
-        /* To obtain a unique key, we assume here that the baseImage and 
-         * location are always the same for each imageName and keyFlags 
-         * combination.
-         */
-        String imageKey = imageName + iconFlags;
+            Image baseImage, String baseImageName, String overlayImageName,
+            int location) {
+        // Key is based on visible content only, so identical composites share
+        // the same cached Image and do not inflate the SWT shared ImageList.
+        String imageKey = baseImageName + "+" + overlayImageName;
         Image image = imageRegistry.get(imageKey);
         if (image == null) {
             image = new OverlayImageIcon(baseImage, getRegistryImage(
-                    imageName), location).createImage();
+                    overlayImageName), location).createImage();
             imageRegistry.put(imageKey, image);
         }
         return image;
