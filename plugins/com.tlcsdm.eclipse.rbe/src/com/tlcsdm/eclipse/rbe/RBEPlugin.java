@@ -15,7 +15,6 @@
  */
 package com.tlcsdm.eclipse.rbe;
 
-import java.net.URI;
 import java.net.URL;
 import java.text.MessageFormat;
 import java.util.MissingResourceException;
@@ -119,14 +118,11 @@ public class RBEPlugin extends AbstractUIPlugin {
 	 */
 	public static ImageDescriptor getImageDescriptor(String name) {
 		String iconPath = "icons/";
-		try {
-			URL installURL = RBEPlugin.getDefault().getBundle().getEntry("/");
-			URI baseUri = installURL.toURI();
-			URI resolved = baseUri.resolve(iconPath + name);
-			return ImageDescriptor.createFromURL(resolved.toURL());
-		} catch (Exception e) {
+		URL entry = RBEPlugin.getDefault().getBundle().getEntry(iconPath + name);
+		if (entry == null) {
 			return ImageDescriptor.getMissingImageDescriptor();
 		}
+		return ImageDescriptor.createFromURL(entry);
 	}
 
 }
