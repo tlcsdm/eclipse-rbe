@@ -680,8 +680,9 @@ public class BundleEntryComposite extends Composite {
         if (countryCode != null && countryCode.length() > 0) {
             String imageName = "countries/" +
             countryCode.toLowerCase() + ".gif";
-            image = UIUtils.getImage(imageName);
-
+            if (bundleEntryExists(imageName)) {
+                image = UIUtils.getImage(imageName);
+            }
         } else if (countryLocale != null
                 && countryLocale.getLanguage() != null
                 && countryLocale.getLanguage().length() > 0) {
@@ -690,13 +691,18 @@ public class BundleEntryComposite extends Composite {
 
             String languageCode = countryLocale.getLanguage();
             String imageName = "countries/" + languageCode.toLowerCase() + ".gif";
-
-            image = UIUtils.getImage(imageName);
+            if (bundleEntryExists(imageName)) {
+                image = UIUtils.getImage(imageName);
+            }
         }
         if (image == null) {
             image = UIUtils.getImage("countries/blank.gif");
         }
         return image;
+    }
+
+    private boolean bundleEntryExists(String name) {
+        return RBEPlugin.getDefault().getBundle().getEntry("icons/" + name) != null;
     }
 
     /*default*/ void resetCommented() {
